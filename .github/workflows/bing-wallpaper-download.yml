@@ -15,7 +15,7 @@ jobs:
           # 使用curl命令下载壁纸
           # 注意：这里使用的是必应壁纸的API URL，但出于保护目的，这里不直接给出
           # 你需要自行查找或编写脚本来获取每日壁纸的URL
-          URL=https://cn.bing.com/"$(curl -s 'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN' | jq -r '.images[0].url')"
+          URL=https://cn.bing.com"$(curl -s 'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN' | jq -r '.images[0].url')"
           wget -O ./bing-wallpaper.jpg $URL
           # 提交更改到GitHub
           git config --local user.name "github-actions[bot]"
