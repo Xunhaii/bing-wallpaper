@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 页面未找到</title>
+    <script src="/assets/tailwind.min.js"></script>
+    <link href="https://start.xunhaii.com/css/fontawesome.all.min.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <script src="/assets/tailwind.config.js"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 bg-secondary dark:bg-dark-secondary text-gray-800 dark:text-gray-200">
+    <!-- 背景图 - 复用主页样式 -->
+    <div id="background" class="fixed inset-0 z-0 bg-blur">
+        <img src="https://api.vvhan.com/api/bing" alt="背景图片" class="w-full h-full object-cover">
+    </div>
+    
+    <!-- 返回主页按钮 - 复用设置按钮样式 -->
+    <div class="absolute top-4 left-4 z-20">
+        <button id="backBtn" class="glass-effect bg-white/70 dark:bg-dark-secondary/70 text-primary dark:text-primary p-3 rounded-full shadow-lg hover:bg-white/90 dark:hover:bg-dark-secondary/90 transition-all duration-300">
+            <i class="fa fa-arrow-left text-xl"></i>
+        </button>
+    </div>
+    
+    <!-- 404内容卡片 - 复用主页卡片样式 -->
+    <div class="glass-effect bg-white/70 dark:bg-dark-secondary/70 rounded-2xl shadow-xl p-8 max-w-md w-full mx-4 text-center">
+        <div class="mb-6">
+            <span class="text-[clamp(4rem,10vw,8rem)] font-bold text-primary dark:text-primary">404</span>
+        </div>
+        <h1 class="text-2xl md:text-3xl font-bold mb-4 text-primary dark:text-primary">页面未找到</h1>
+        <p class="mb-6 text-gray-700 dark:text-gray-300">
+            你所请求的页面不存在或已被移除。
+            请检查URL或返回主页重新开始。
+        </p>
+        <button id="homeBtn" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg transition-colors duration-300 text-base font-medium">
+            返回主页
+        </button>
+    </div>
+    
+    <!-- 页脚 - 复用主页页脚样式 -->
+    <div class="absolute bottom-4 text-center text-sm text-gray-600 dark:text-gray-400 z-10">
+        <p>© 2025 Xunhaii. | All rights reserved.</p>
+    </div>
+    
+    <!-- 引入自定义脚本 -->
+    <script src="/assets/js/script.js"></script>
+    <script>
+        // 404页面特有的脚本
+        document.addEventListener('DOMContentLoaded', function() {
+            // 返回主页按钮事件
+            const backBtn = document.getElementById('backBtn');
+            const homeBtn = document.getElementById('homeBtn');
+            
+            function goHome() {
+                window.location.href = '/'; // 返回主页
+            }
+            
+            backBtn.addEventListener('click', goHome);
+            homeBtn.addEventListener('click', goHome);
+            
+            // 应用已保存的主题设置
+            const savedTheme = localStorage.getItem('themeMode') || 'system';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+            } else {
+                // 跟随系统
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }
+            
+            // 应用已保存的背景设置
+            const savedBackgroundUrl = localStorage.getItem('backgroundUrl');
+            if (savedBackgroundUrl) {
+                document.getElementById('background').querySelector('img').src = savedBackgroundUrl;
+            }
+            
+            // 应用已保存的模糊强度
+            const blurValue = localStorage.getItem('blurIntensity') || '8';
+            document.getElementById('background').querySelector('img').style.filter = `blur(${blurValue}px)`;
+        });
+    </script>
+</body>
+</html>
