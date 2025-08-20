@@ -20,9 +20,15 @@ jobs:
           # 你需要自行查找或编写脚本来获取每日壁纸的URL
           URL=https://cn.bing.com"$(curl -s 'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN' | jq -r '.images[0].url')"
           wget -O ./bing-wallpaper.jpg $URL
+      - name: Configurate git
+        run: |
           # 提交更改到GitHub
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "Xunhaii"
+          git config --local user.email "102942357+Xunhaii@users.noreply.github.com"
           git add bing-wallpaper.jpg
-          git commit -m "Update Bing Wallpaper"
-          git push
+          git commit -m "更新Bing壁纸"
+      - name: Push changes
+        uses:  ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.MY_GIT_TOKEN }}
+          branch: main
